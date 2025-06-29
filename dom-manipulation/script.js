@@ -175,4 +175,15 @@ async function syncQuotes() {
   await fetchQuotesFromServer();     // Get server data first
   await uploadQuotesToServer();     // Then push our current data
   alert("Sync complete!");
-}
+};
+async function syncQuotes() {
+  try {
+    await fetchQuotesFromServer();   // Pull new quotes from server
+    await uploadQuotesToServer();   // Push local quotes to server
+    console.log("Quotes synced with server!");
+    alert("Quotes synced with server!");
+  } catch (error) {
+    console.error("Error syncing quotes:", error);
+    alert("Failed to sync with server.");
+  }
+};
