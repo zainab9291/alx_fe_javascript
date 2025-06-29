@@ -171,3 +171,8 @@ window.onload = function () {
   // Auto-sync every 30 seconds
   setInterval(fetchQuotesFromServer, 30000);
 };
+async function syncQuotes() {
+  await fetchQuotesFromServer();     // Get server data first
+  await uploadQuotesToServer();     // Then push our current data
+  alert("Sync complete!");
+}
