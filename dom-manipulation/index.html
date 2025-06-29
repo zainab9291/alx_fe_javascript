@@ -7,39 +7,27 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      padding: 20px;
-      max-width: 600px;
-      margin: auto;
+      padding: 2rem;
       background-color: #f4f4f4;
     }
     h1 {
-      text-align: center;
       color: #333;
     }
     #quoteDisplay {
       margin: 20px 0;
-      font-size: 1.2rem;
-      font-style: italic;
-      background-color: #fff;
-      padding: 15px;
-      border-left: 5px solid #2196f3;
+      padding: 1rem;
+      border: 1px solid #ccc;
+      background: white;
     }
     input, select, button {
-      display: block;
-      margin: 10px 0;
-      padding: 10px;
-      font-size: 1rem;
+      margin: 5px 0;
+      padding: 0.5rem;
       width: 100%;
-      box-sizing: border-box;
+      max-width: 400px;
+      display: block;
     }
-    button {
-      background-color: #2196f3;
-      color: white;
-      border: none;
-      cursor: pointer;
-    }
-    button:hover {
-      background-color: #1976d2;
+    .form-group {
+      margin-bottom: 1rem;
     }
   </style>
 </head>
@@ -47,27 +35,31 @@
 
   <h1>Dynamic Quote Generator</h1>
 
-  <!-- Category Filter -->
-  <label for="categoryFilter">Filter by Category:</label>
-  <select id="categoryFilter" onchange="filterQuotes()">
-    <option value="all">All Categories</option>
-    <!-- Categories will be populated dynamically -->
-  </select>
-
-  <!-- Quote Display -->
-  <div id="quoteDisplay">Click "Show Quote" to begin!</div>
+  <!-- Display Quote -->
+  <div id="quoteDisplay">Quote will appear here...</div>
   <button id="newQuote" onclick="showRandomQuote()">Show New Quote</button>
 
-  <!-- Add New Quote -->
-  <h2>Add a New Quote</h2>
-  <input id="newQuoteText" type="text" placeholder="Enter a new quote" />
-  <input id="newQuoteCategory" type="text" placeholder="Enter quote category" />
-  <button onclick="addQuote()">Add Quote</button>
+  <!-- Category Filter -->
+  <div class="form-group">
+    <label for="categoryFilter">Filter by Category:</label>
+    <select id="categoryFilter" onchange="filterQuotes()">
+      <option value="all">All Categories</option>
+      <!-- Options populated dynamically -->
+    </select>
+  </div>
 
-  <!-- JSON Import/Export -->
-  <h2>Import / Export</h2>
-  <button onclick="exportToJson()">Export Quotes</button>
-  <input type="file" id="importFile" accept=".json" onchange="importFromJsonFile(event)" />
+  <!-- Add Quote -->
+  <div class="form-group">
+    <input id="newQuoteText" type="text" placeholder="Enter a new quote" />
+    <input id="newQuoteCategory" type="text" placeholder="Enter quote category" />
+    <button onclick="addQuote()">Add Quote</button>
+  </div>
+
+  <!-- Import / Export -->
+  <div class="form-group">
+    <button onclick="exportQuotes()">Export Quotes</button>
+    <input type="file" id="importFile" accept=".json" onchange="importFromJsonFile(event)" />
+  </div>
 
   <script src="script.js"></script>
 </body>
