@@ -1,37 +1,67 @@
+// Array to store quotes
 const quotes = [
-  { text: "Success is not final, failure is not fatal: it is the courage to continue that counts.", category: "Motivation" },
-  { text: "Life is what happens when you're busy making other plans.", category: "Life" },
-  { text: "If you judge people, you have no time to love them.", category: "Wisdom" }
+  { text: "Believe in yourself!", category: "Motivation" },
+  { text: "Code is like humor. When you have to explain it, it’s bad.", category: "Programming" },
+  { text: "The best way to get started is to quit talking and begin doing.", category: "Productivity" }
 ];
 
+// Function to show a random quote
 function showRandomQuote() {
+  const display = document.getElementById("quoteDisplay");
+  if (quotes.length === 0) {
+    display.innerText = "No quotes available.";
+    return;
+  }
   const randomIndex = Math.floor(Math.random() * quotes.length);
   const quote = quotes[randomIndex];
-
-  const displayDiv = document.getElementById("quoteDisplay");
-  displayDiv.innerHTML = `
-    <div class="quote">"${quote.text}"</div>
-    <div class="category">- ${quote.category}</div>
-  `;
+  display.innerHTML = `<p>"${quote.text}"</p><small>- ${quote.category}</small>`;
 }
 
+// Function to add a new quote from input fields
 function addQuote() {
   const textInput = document.getElementById("newQuoteText");
   const categoryInput = document.getElementById("newQuoteCategory");
-  const newText = textInput.value.trim();
-  const newCategory = categoryInput.value.trim();
 
-  if (newText && newCategory) {
-    quotes.push({ text: newText, category: newCategory });
-    textInput.value = "";
-    categoryInput.value = "";
-    showRandomQuote();
+  const text = textInput.value.trim();
+  const category = categoryInput.value.trim();
+
+  if (text && category) {
+    quotes.push({ text, category });
+    alert("Quote added!");
+    textInput.value = '';
+    categoryInput.value = '';
   } else {
-    alert("Please enter both quote and category.");
+    alert("Please enter both quote text and category.");
   }
 }
 
+// Function to dynamically create the Add Quote form
+function createAddQuoteForm() {
+  const formContainer = document.createElement("div");
+
+  const inputText = document.createElement("input");
+  inputText.type = "text";
+  inputText.id = "newQuoteText";
+  inputText.placeholder = "Enter a new quote";
+
+  const inputCategory = document.createElement("input");
+  inputCategory.type = "text";
+  inputCategory.id = "newQuoteCategory";
+  inputCategory.placeholder = "Enter quote category";
+
+  const addButton = document.createElement("button");
+  addButton.innerText = "Add Quote";
+  addButton.onclick = addQuote;
+
+  formContainer.appendChild(inputText);
+  formContainer.appendChild(inputCategory);
+  formContainer.appendChild(addButton);
+
+  document.body.appendChild(formContainer);
+}
+
+// Event listeners
 document.getElementById("newQuote").addEventListener("click", showRandomQuote);
 
-// Initial quote display
-showRandomQuote();
+// Call to dynamically build the form on page load
+createAddQuoteForm();
