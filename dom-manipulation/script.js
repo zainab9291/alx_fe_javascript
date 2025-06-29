@@ -94,7 +94,7 @@ function exportQuotes() {
   a.click();
 }
 
-// Import quotes from JSON
+// Import quotes from JSON file
 function importFromJsonFile(event) {
   const reader = new FileReader();
   reader.onload = function (e) {
@@ -115,19 +115,18 @@ function importFromJsonFile(event) {
   reader.readAsText(event.target.files[0]);
 }
 
-// ✅ Fetch quotes from mock server with async/await
+// ✅ Fetch quotes from server
 async function fetchQuotesFromServer() {
   try {
-    const res = await fetch('https://jsonplaceholder.typicode.com/posts?_limit=5');
+    const res = await fetch('https://jsonplaceholder.typicode.com/posts?_limit=3');
     const data = await res.json();
 
-    const newQuotes = data.map(post => ({
+    const serverQuotes = data.map(post => ({
       text: post.title,
       category: "Server"
     }));
 
-    // Conflict resolution: server quotes go first
-    quotes = [...newQuotes, ...quotes];
+    quotes = [...serverQuotes, ...quotes];
     saveQuotes();
     populateCategories();
 
@@ -137,7 +136,28 @@ async function fetchQuotesFromServer() {
   }
 }
 
-// Initialization on page load
+// ✅ Upload quotes to server using POST
+async function uploadQuotesToServer() {
+  try {
+    const response = await fetch('https://jsonplaceholder.typicode.com/posts', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(quotes)
+    });
+
+    if (response.ok) {
+      alert("Quotes uploaded to server successfully (simulated).");
+    } else {
+      alert("Failed to upload quotes.");
+    }
+  } catch (err) {
+    console.error("Upload error:", err);
+  }
+}
+
+// Initialize on page load
 window.onload = function () {
   loadQuotes();
   populateCategories();
@@ -148,6 +168,6 @@ window.onload = function () {
     document.getElementById("quoteDisplay").textContent = `"${quote.text}" - ${quote.category}`;
   }
 
-  // Sync every 30 seconds
+  // Auto-sync every 30 seconds
   setInterval(fetchQuotesFromServer, 30000);
 };
