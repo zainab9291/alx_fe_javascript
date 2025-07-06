@@ -187,3 +187,33 @@ async function syncQuotes() {
     alert("Failed to sync with server.");
   }
 };
+function createAddQuoteForm() {
+  const formContainer = document.createElement('div');
+  formContainer.id = 'quoteForm';
+
+  const quoteInput = document.createElement('input');
+  quoteInput.id = 'newQuoteText';
+  quoteInput.type = 'text';
+  quoteInput.placeholder = 'Enter a new quote';
+
+  const categoryInput = document.createElement('input');
+  categoryInput.id = 'newQuoteCategory';
+  categoryInput.type = 'text';
+  categoryInput.placeholder = 'Enter quote category';
+
+  const addButton = document.createElement('button');
+  addButton.textContent = 'Add Quote';
+  addButton.onclick = addQuote;
+
+  formContainer.appendChild(quoteInput);
+  formContainer.appendChild(categoryInput);
+  formContainer.appendChild(addButton);
+
+  document.body.appendChild(formContainer);
+}
+window.onload = function () {
+  loadQuotes();         // Load from localStorage or server
+  populateCategories(); // Populate dropdown
+  showRandomQuote();    // Show one quote on load
+  createAddQuoteForm(); // Create the input form dynamically
+};
